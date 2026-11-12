@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#142b55">
+<meta name="description" content="ARAV's Little School - playful bilingual learning puzzles for children">
+<link rel="manifest" href="manifest.json">
+<title>ARAV'S Little School</title>
+<style>
+:root{--navy:#142b55;--blue:#3478df;--yellow:#ffd45a;--pink:#ff8ea7;--green:#42b883;--ink:#20304a}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,"Noto Sans Bengali",sans-serif;background:#f4f8ff;color:var(--ink);touch-action:pan-y}
+button{font:inherit;border:0;cursor:pointer}.app{max-width:720px;min-height:100vh;margin:auto;padding:14px 14px 28px}
+.splash{position:fixed;inset:0;background:radial-gradient(circle at 50% 35%,#315e9c,#142b55 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;z-index:5;animation:fadeout .7s ease 2.3s forwards}
+.logo{width:148px;height:148px;border-radius:38px;background:linear-gradient(145deg,#fff,#dceaff);display:grid;place-items:center;box-shadow:0 18px 40px #08172d88;transform:rotate(-5deg)}
+.logo span{font-size:55px;font-weight:1000;letter-spacing:-7px;color:#1c4f9a;text-shadow:3px 4px 0 #ffd45a}
+.splash h1{font-size:25px;margin:25px 0 4px;text-align:center}.splash p{margin:0;color:#d8e7ff}
+@keyframes fadeout{to{opacity:0;visibility:hidden}}
+header{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 2px 16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}.mini-logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(145deg,#fff,#dceaff);display:grid;place-items:center;color:#1c4f9a;font-size:22px;font-weight:1000;box-shadow:0 4px 12px #17345a22}
+.brand strong{display:block;font-size:17px;color:var(--navy);line-height:1.15}.brand small{color:#72809a}
+.pill{background:white;border-radius:30px;padding:9px 12px;font-weight:750;color:#345;box-shadow:0 3px 12px #1d3d6812}
+.hero{background:linear-gradient(135deg,#1c3e73,#3478df);border-radius:24px;padding:23px;color:white;position:relative;overflow:hidden;box-shadow:0 12px 28px #244b8428}
+.hero:after{content:"✦";position:absolute;right:22px;top:5px;font-size:95px;color:#ffffff20}
+.hero h2{margin:0 0 6px;font-size:25px}.hero p{margin:0;color:#e0edff;max-width:80%;line-height:1.5}
+.section-title{margin:23px 3px 12px;font-size:18px;color:var(--navy)}
+.mode-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.mode{border-radius:21px;padding:18px;text-align:left;display:flex;align-items:center;gap:14px;box-shadow:0 6px 18px #233c6012;min-height:105px}
+.mode .emoji{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;font-size:30px;background:#ffffffaa}
+.mode b{display:block;font-size:19px}.mode small{display:block;opacity:.8;margin-top:3px}
+.beginner{background:#e5f1ff;color:#174a8b}.regular{background:#e5f7eb;color:#216b3a}.pro{background:#f1e8ff;color:#7034a0}
+.note{background:white;border-radius:17px;padding:15px;margin-top:16px;color:#65738a;font-size:13px;line-height:1.5}
+.panel{background:white;border-radius:23px;padding:17px;box-shadow:0 8px 22px #243c6010}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.back{background:#edf3fc;color:#24446f;padding:9px 13px;border-radius:12px;font-weight:750}
+.progress{height:9px;background:#e9eef6;border-radius:20px;overflow:hidden;margin:9px 0 15px}.progress span{display:block;height:100%;background:linear-gradient(90deg,#45c58b,#ffd45a);width:0;transition:width .25s}
+.board{min-height:230px;border:2px dashed #d8e2f0;border-radius:20px;background:linear-gradient(#fff,#fbfdff);display:flex;align-items:center;justify-content:center;position:relative;padding:15px;overflow:hidden}
+.big-letter{font-size:clamp(125px,38vw,205px);font-weight:950;color:#3478df;line-height:1;text-shadow:4px 5px 0 #dceaff;letter-spacing:-7px}
+.big-word{font-size:clamp(35px,10vw,60px);font-weight:900;color:#3478df;text-align:center;overflow-wrap:anywhere}
+.pieces{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:15px 0}
+.piece{min-width:65px;min-height:62px;padding:10px 13px;border-radius:17px;background:#ffdf75;color:#654b08;font-size:23px;font-weight:900;box-shadow:0 5px 0 #e9bd4c;touch-action:none}
+.piece:nth-child(3n+2){background:#a8e5c6;box-shadow:0 5px 0 #75c99c;color:#155a37}.piece:nth-child(3n){background:#ffc0d0;box-shadow:0 5px 0 #ef91aa;color:#8a3450}
+.piece.selected{outline:4px solid #3478df;transform:translateY(-3px)}.piece:disabled{cursor:default}
+.targets{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:14px 0 8px}
+.target{min-width:62px;min-height:62px;width:auto;max-width:100%;padding:7px 10px;border:2px dashed #bdcbe0;border-radius:15px;display:grid;place-items:center;font-size:24px;font-weight:900;background:#f8fbff;color:#8ca0bd;overflow:hidden}
+.target .ghost{color:transparent;-webkit-text-stroke:1.15px #9aacc4;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:clip}
+.target.word-slot{min-width:72px;font-size:15px;padding:8px 9px}.target.word-slot .ghost{font-size:15px;-webkit-text-stroke:.65px #9aacc4}
+.target.filled{border:2px solid #48b985;background:#e9fff3;color:#197747}.target.filled .ghost{display:none}
+.colors{display:flex;justify-content:center;gap:12px;margin:14px 0}.swatch{width:35px;height:35px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1px #ccd5e3}.swatch.active{box-shadow:0 0 0 3px #263e63}
+.primary{background:#3478df;color:white;border-radius:15px;padding:13px 18px;font-weight:850;width:100%;margin-top:8px}
+.secondary{background:#edf3fc;color:#24446f;border-radius:14px;padding:12px 16px;font-weight:800}
+.feedback{text-align:center;min-height:30px;font-weight:750;color:#24784c;margin:7px}
+.image-card{display:none;text-align:center;background:#fff7db;border-radius:19px;padding:15px;margin:12px 0}.image-card .art{font-size:65px}.image-card b{display:block;font-size:22px;color:#7a5510}
+.parent-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.stat{background:#f4f8ff;border-radius:16px;padding:14px}.stat strong{display:block;font-size:24px;color:#1d4e91}.stat small{color:#71819a}
+.mode-progress{background:#fff;border:1px solid #e8eef7;border-radius:15px;padding:12px;margin:10px 0}.mode-progress b{display:block}.storage-note{font-size:12px;color:#78879c;line-height:1.5;margin-top:12px}
+footer{text-align:center;color:#8b98aa;font-size:12px;margin-top:25px}
+@media(min-width:560px){.mode-grid{grid-template-columns:repeat(3,1fr)}.mode{display:block}.mode .emoji{margin-bottom:12px}.mode b{font-size:17px}}
+</style>
+</head>
+<body>
+<div class="splash" id="splash"><div class="logo"><span>AR</span></div><h1>ARAV'S Little School</h1><p>Play • Learn • Grow | খেলি • শিখি • বড় হই</p></div>
+<div class="app">
+<header>
+  <div class="brand"><div class="mini-logo">AR</div><div><strong>ARAV'S Little School</strong><small>Play • Learn • Grow</small></div></div>
+  <div style="display:flex;align-items:center;gap:7px"><div class="pill" id="stars">⭐ 0</div><button class="pill" onclick="openParent()">👨‍👩‍👧 অভিভাবক</button></div>
+</header>
+<main id="home">
+<section class="hero"><h2>চলো, শিখতে শিখতে খেলি!</h2><p>Learn letters, words and sentences with fun puzzles. মজার পাজলে অক্ষর, শব্দ ও বাক্য শিখি।</p></section>
+<h3 class="section-title">তোমার শেখার ধাপ বেছে নাও</h3>
+<div class="mode-grid">
+<button class="mode beginner" onclick="openMode('beginner')"><span class="emoji">🔤</span><span><b>BEGINNER</b><small>অক্ষর পরিচিতি · A–Z ও বাংলা</small></span></button>
+<button class="mode regular" onclick="openMode('regular')"><span class="emoji">🧩</span><span><b>REGULAR</b><small>শব্দ তৈরি · Build words</small></span></button>
+<button class="mode pro" onclick="openMode('pro')"><span class="emoji">📚</span><span><b>PRO</b><small>বাক্য তৈরি · Make sentences</small></span></button>
+</div>
+<div class="note">👨‍👩‍👧 অভিভাবকদের জন্য: অক্ষর, শব্দ ও বাক্যের হালকা পাজল অনুশীলন। অগ্রগতি এই ডিভাইসের ব্রাউজারে সেভ হয়। অফলাইনে ব্যবহারের জন্য আগে একবার অনলাইনে খুলে ইনস্টল/ক্যাশ করতে হবে।</div>
+</main>
+<section id="game" hidden>
+<div class="topline"><button class="back" onclick="goHome()">← মেনু</button><b id="modeName">BEGINNER</b><span class="pill" id="level">Level 1</span></div>
+<div class="progress"><span id="bar"></span></div>
+<div class="panel">
+<div style="text-align:center"><b id="instruction">অক্ষরটি সম্পূর্ণ করো</b><div id="subinstruction" style="color:#8190a6;font-size:13px;margin-top:4px">ফিকে অক্ষরের ছায়ার সঙ্গে মিলিয়ে সঠিক টুকরো বসাও</div></div>
+<div class="board" id="board"><div class="big-letter" id="bigLetter">A</div></div>
+<div class="targets" id="targets" aria-label="উত্তরের ঘর"></div>
+<div class="pieces" id="pieces" aria-label="পাজলের টুকরো"></div>
+<div class="colors" id="colors"><button class="swatch active" aria-label="নীল রং" style="background:#3478df" data-color="#3478df"></button><button class="swatch" aria-label="গোলাপি রং" style="background:#ef647e" data-color="#ef647e"></button><button class="swatch" aria-label="সবুজ রং" style="background:#27a879" data-color="#27a879"></button><button class="swatch" aria-label="হলুদ রং" style="background:#f2b72c" data-color="#f2b72c"></button></div>
+<div class="feedback" id="feedback">ফিকে অক্ষরের সঙ্গে মিলিয়ে সঠিক টুকরো বসাও।</div>
+<div class="image-card" id="imageCard"><div class="art" id="art">🍎</div><b id="wordTitle">A for Apple</b><div id="wordMeaning">Apple মানে আপেল</div><button class="secondary" onclick="speakCurrent()">🔊 আবার শোনো</button></div>
+<button class="primary" id="next" hidden onclick="nextLevel()">পরের লেভেল →</button>
+</div>
+</section>
+<section id="parent" hidden>
+<div class="topline"><button class="back" onclick="goHome()">← মেনু</button><b>অভিভাবক ড্যাশবোর্ড</b></div>
+<div class="panel">
+  <p style="margin-top:0;color:#687a92">এই ডিভাইসে শিশুর শেখার অগ্রগতি</p>
+  <div class="parent-stats"><div class="stat"><strong id="parentStars">0</strong><small>⭐ অর্জিত স্টার</small></div><div class="stat"><strong id="parentDone">0</strong><small>সম্পন্ন লেভেল</small></div></div>
+  <div class="mode-progress"><b>🔤 BEGINNER</b><div class="progress"><span id="beginnerBar"></span></div><small id="beginnerText">0 / 76 লেভেল</small></div>
+  <div class="mode-progress"><b>🧩 REGULAR</b><div class="progress"><span id="regularBar"></span></div><small id="regularText">0 / 26 শব্দ</small></div>
+  <div class="mode-progress"><b>📚 PRO</b><div class="progress"><span id="proBar"></span></div><small id="proText">0 / 4 বাক্য</small></div>
+  <div class="storage-note" id="storageStatus">অগ্রগতি এই ব্রাউজারের লোকাল স্টোরেজে রাখা হয়। ব্রাউজারের ডেটা মুছে ফেললে অগ্রগতিও মুছে যেতে পারে।</div>
+  <button class="secondary" style="width:100%;margin-top:14px" onclick="resetProgress()">অগ্রগতি রিসেট</button>
+</div>
+</section>
+<footer>ARAV'S Little School · Made for little learners ❤️</footer>
+</div>
+<script>
+const en="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+// প্রচলিত স্কুল-চার্টের ৫০টি বর্ণ/চিহ্ন: ১১ স্বরবর্ণ এবং ব্যঞ্জনবর্ণ-অংশের ৩৯টি এন্ট্রি। শেষের কয়েকটি আলাদা বিশেষ চিহ্ন।
+const bn="অ আ ই ঈ উ ঊ ঋ এ ঐ ও ঔ ক খ গ ঘ ঙ চ ছ জ ঝ ঞ ট ঠ ড ঢ ণ ত থ দ ধ ন প ফ ব ভ ম য র ল শ ষ স হ ড় ঢ় য় ৎ ং ঃ ঁ".split(" ");
+const words=[
+ ["A","Apple","আপেল","🍎"],["B","Ball","বল","⚽"],["C","Cat","বিড়াল","🐱"],["D","Dog","কুকুর","🐶"],["E","Elephant","হাতি","🐘"],["F","Fish","মাছ","🐟"],["G","Goat","ছাগল","🐐"],["H","Hen","মুরগি","🐔"],["I","Ice cream","আইসক্রিম","🍦"],["J","Juice","জুস","🧃"],["K","Kite","ঘুড়ি","🪁"],["L","Lion","সিংহ","🦁"],["M","Mango","আম","🥭"],["N","Nest","পাখির বাসা","🪺"],["O","Orange","কমলা","🍊"],["P","Parrot","টিয়া","🦜"],["Q","Queen","রানি","👑"],["R","Rabbit","খরগোশ","🐰"],["S","Sun","সূর্য","☀️"],["T","Tiger","বাঘ","🐯"],["U","Umbrella","ছাতা","☂️"],["V","Van","ভ্যান","🚐"],["W","Watch","ঘড়ি","⌚"],["X","Xylophone","জাইলোফোন (এক ধরনের বাদ্যযন্ত্র)","🎼"],["Y","Yak","ইয়াক (এক ধরনের লোমশ গরু)","🐂"],["Z","Zebra","জেব্রা","🦓"]
+];
+const bnExamples={
+ "অ":["অজগর","অজগর","🐍"],"আ":["আম","আম","🥭"],"ই":["ইঁদুর","ইঁদুর","🐭"],"ঈ":["ঈগল","ঈগল","🦅"],"উ":["উট","উট","🐪"],"ঊ":["ঊষা","ভোরের আলো","🌅"],"ঋ":["ঋষি","ঋষি","🧘"],"এ":["একতারা","একতারা","🪕"],"ঐ":["ঐক্য","একতা","🤝"],"ও":["ওল","ওল","🍠"],"ঔ":["ঔষধ","ঔষধ","💊"],
+ "ক":["কলম","কলম","🖊️"],"খ":["খরগোশ","খরগোশ","🐰"],"গ":["গরু","গরু","🐄"],"ঘ":["ঘড়ি","ঘড়ি","⏰"],"ঙ":["আঙুর","আঙুর","🍇"],"চ":["চাঁদ","চাঁদ","🌙"],"ছ":["ছাতা","ছাতা","☂️"],"জ":["জাহাজ","জাহাজ","🚢"],"ঝ":["ঝরনা","ঝরনা","💧"],"ঞ":["অঞ্জলি","অঞ্জলি শব্দে ঞ আছে","🌼"],"ট":["টমেটো","টমেটো","🍅"],"ঠ":["ঠেলা","ঠেলা গাড়ি","🛒"],"ড":["ডাব","ডাব","🥥"],"ঢ":["ঢোল","ঢোল","🥁"],"ণ":["গণনা","গণনা শব্দে ণ আছে","🔢"],"ত":["তারা","তারা","⭐"],"থ":["থালা","থালা","🍽️"],"দ":["দরজা","দরজা","🚪"],"ধ":["ধান","ধান","🌾"],"ন":["নৌকা","নৌকা","🚣"],"প":["পাখি","পাখি","🐦"],"ফ":["ফুল","ফুল","🌸"],"ব":["বই","বই","📘"],"ভ":["ভালুক","ভালুক","🐻"],"ম":["মাছ","মাছ","🐟"],"য":["যন্ত্র","যন্ত্র","⚙️"],"র":["রং","রং","🎨"],"ল":["লিচু","লিচু","🍒"],"শ":["শাপলা","শাপলা","🌼"],"ষ":["ষাঁড়","ষাঁড়","🐂"],"স":["সাপ","সাপ","🐍"],"হ":["হাতি","হাতি","🐘"],"ড়":["ঘোড়া","ঘোড়া শব্দে ড় আছে","🐴"],"ঢ়":["আষাঢ়","আষাঢ় শব্দে ঢ় আছে","🌧️"],"য়":["সময়","সময় শব্দে য় আছে","⏳"],"ৎ":["উৎস","উৎস শব্দে খণ্ড-ত আছে","🏞️"],"ং":["রং","রং শব্দে অনুস্বার আছে","🎨"],"ঃ":["দুঃখ","দুঃখ শব্দে বিসর্গ আছে","😔"],"ঁ":["চাঁদ","চাঁদ শব্দে চন্দ্রবিন্দু আছে","🌙"]
+};
+const sentences=[["I see a cat.","আমি একটি বিড়াল দেখি।","🐱"],["This is a ball.","এটি একটি বল।","⚽"],["I like apples.","আমি আপেল পছন্দ করি।","🍎"],["The sun is hot.","সূর্য গরম।","☀️"]];
+const signShapes={"ৎ":"উৎ","ং":"রং","ঃ":"দুঃ","ঁ":"চাঁদ"};
+const STORAGE_KEY="aravLittleSchoolProgressV2";
+const emptyProgress=()=>({stars:0,modes:{beginner:0,regular:0,pro:0},lastMode:"beginner"});
+function loadProgress(){try{const p=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");return p&&p.modes?{...emptyProgress(),...p,modes:{...emptyProgress().modes,...p.modes}}:emptyProgress()}catch(e){return emptyProgress()}}
+let progress=loadProgress(),mode="beginner",idx=0,selected=null,placed=0,currentColor="#3478df",completed=false,dragPiece=null,storageAvailable=true;
+const $=id=>document.getElementById(id);
+const totals={beginner:en.length+bn.length,regular:words.length,pro:sentences.length};
+function saveProgress(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(progress));storageAvailable=true}catch(e){storageAvailable=false}updateStars()}
+function updateStars(){$("stars").textContent="⭐ "+progress.stars}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function displayPart(part){return mode==="beginner"&&signShapes[part]?signShapes[part]:part}
+function openMode(m){mode=m;idx=progress.modes[m]>=totals[m]?0:progress.modes[m];progress.lastMode=m;saveProgress();$("home").hidden=true;$("parent").hidden=true;$("game").hidden=false;$("modeName").textContent=m.toUpperCase();render()}
+function goHome(){$("game").hidden=true;$("parent").hidden=true;$("home").hidden=false}
+function openParent(){$("home").hidden=true;$("game").hidden=true;$("parent").hidden=false;renderParent()}
+function data(){
+ if(mode==="beginner"){
+  if(idx<en.length){const letter=en[idx],w=words.find(x=>x[0]===letter);return{kind:"letter",title:letter,parts:[letter],word:w,meaning:w?`${letter} for ${w[1]} — ${w[1]} মানে ${w[2]}`:`${letter} অক্ষর`,emoji:w?w[3]:"🔠",speech:[letter,w?`${letter} for ${w[1]}`:letter],language:"en-US"}}
+  const letter=bn[idx-en.length],ex=bnExamples[letter];return{kind:"letter",title:letter,parts:[letter],word:null,meaning:ex?`${letter} — ${ex[0]}${ex[1]!==ex[0]?"; "+ex[1]:""}`:`${letter} অক্ষর`,example:ex?ex[0]:null,emoji:ex?ex[2]:"🔠",speech:[letter,ex?`${letter} — ${ex[0]}`:letter],language:"bn-BD"}
+ }
+ if(mode==="regular"){const w=words[idx%words.length];return{kind:"word",title:w[1],parts:Array.from(w[1].replace(/\s/g,"").toUpperCase()),word:w,meaning:`${w[1]} মানে ${w[2]}`,emoji:w[3],speech:[w[1],`${w[1]} মানে ${w[2]}`]}}
+ const s=sentences[idx%sentences.length];return{kind:"sentence",title:s[0],parts:s[0].split(/\s+/),word:null,meaning:s[1],emoji:s[2],speech:[s[0],s[1]]}
+}
+function distractors(letter){const pool=mode==="beginner"?(idx<en.length?en:bn):[];return shuffle(pool.filter(x=>x!==letter)).slice(0,2)}
+function render(){
+ const d=data();completed=false;placed=0;selected=null;dragPiece=null;$('next').hidden=true;$('imageCard').style.display='none';$('feedback').textContent="ফিকে অক্ষর/শব্দের ছায়ার সঙ্গে মিলিয়ে সঠিক টুকরো বসাও।";
+ $('level').textContent=`Level ${idx+1} / ${totals[mode]}`;$('bar').style.width=(Math.min(100,((idx+1)/totals[mode])*100))+"%";
+ $('instruction').textContent=mode==="beginner"?"সঠিক অক্ষরটি খুঁজে বসাও":mode==="regular"?"শব্দটি তৈরি করো":"বাক্যটি সাজাও";
+ $('subinstruction').textContent=mode==="beginner"?"ফিকে অক্ষরের আকৃতির সঙ্গে মিলিয়ে টুকরো বেছে নাও":mode==="regular"?"প্রতিটি ফিকে অক্ষরের ঘরে সঠিক টুকরো বসাও":"ফিকে শব্দের ঘরে সঠিক শব্দ বসাও";
+ $('bigLetter').textContent=displayPart(d.title);$('bigLetter').className=mode==="beginner"?"big-letter":"big-word";$('bigLetter').style.color=currentColor;
+ const targets=$('targets');targets.innerHTML="";const pieces=$('pieces');pieces.innerHTML="";
+ d.parts.forEach((part,i)=>{const t=document.createElement('button');t.className='target'+(mode==='pro'?' word-slot':'');t.dataset.index=i;t.setAttribute('aria-label',`ফাঁকা ঘর ${i+1}`);const ghost=document.createElement('span');ghost.className='ghost';ghost.textContent=displayPart(part);t.appendChild(ghost);t.onclick=()=>placeSelected(i);targets.appendChild(t)});
+ let tileValues;
+ if(mode==='beginner'){tileValues=[d.parts[0],...distractors(d.parts[0])]}else{tileValues=shuffle([...d.parts])}
+ shuffle(tileValues).forEach((p)=>{const b=document.createElement('button');b.className='piece';b.textContent=displayPart(p);b.dataset.part=p;b.draggable=true;b.setAttribute('aria-label',`টুকরো ${p}`);b.onclick=()=>selectPiece(b);b.addEventListener('dragstart',()=>{dragPiece=b});pieces.appendChild(b)});
+ targets.querySelectorAll('.target').forEach(t=>{t.addEventListener('dragover',e=>e.preventDefault());t.addEventListener('drop',e=>{e.preventDefault();if(dragPiece)placePart(dragPiece,+t.dataset.index)})});
+ $('colors').querySelectorAll('.swatch').forEach(b=>b.onclick=()=>{currentColor=b.dataset.color;$('bigLetter').style.color=currentColor;$('colors').querySelectorAll('.swatch').forEach(x=>x.classList.toggle('active',x===b))});
+}
+function selectPiece(b){if(completed||b.disabled)return;document.querySelectorAll('.piece').forEach(x=>x.classList.remove('selected'));selected=b;b.classList.add('selected');$('feedback').textContent="এবার মিল থাকা ফিকে ঘরে ট্যাপ করো।"}
+function placeSelected(i){if(selected)placePart(selected,i)}
+function placePart(b,i){if(completed||b.disabled)return;const d=data(),target=$('targets').children[i];if(!target||target.classList.contains('filled'))return;const expected=d.parts[i];if(b.dataset.part===expected){target.textContent=displayPart(expected);target.classList.add('filled');b.disabled=true;b.style.opacity='.25';b.classList.remove('selected');selected=null;placed++;$('feedback').textContent="বাহ! ঠিক জায়গায় বসেছে! ⭐";if(placed===d.parts.length)finish()}else{$('feedback').textContent="এটা মেলেনি। ফিকে আকৃতিটি আবার দেখো—তুমি পারবে! 💪";b.classList.remove('selected');selected=null}}
+function finish(){if(completed)return;completed=true;const firstTime=idx>=progress.modes[mode];if(firstTime){progress.modes[mode]=Math.max(progress.modes[mode],idx+1);progress.stars+=3;saveProgress();$('feedback').textContent="🎉 দারুণ! নতুন লেভেল সম্পন্ন—৩ স্টার পেয়েছো!"}else{$('feedback').textContent="🎉 দারুণ! এই লেভেলটি তুমি আগেও সম্পন্ন করেছিলে!"}
+ const d=data();$('imageCard').style.display='block';$('art').textContent=d.emoji;$('wordTitle').textContent=d.word?`${d.word[0]} for ${d.word[1]}`:(d.example?`${d.title} — ${d.example}`:d.title);$('wordMeaning').textContent=d.meaning;$('next').textContent=idx+1>=totals[mode]?"মেনুতে ফিরি ✓":"পরের লেভেল →";$('next').hidden=false;speakCurrent()}
+function nextLevel(){if(idx+1>=totals[mode]){goHome();return}idx++;render()}
+function speakCurrent(){const d=data();if(!('speechSynthesis'in window)||!('SpeechSynthesisUtterance'in window)){$('feedback').textContent="এই ডিভাইসে ভয়েস সুবিধা পাওয়া যাচ্ছে না।";return}window.speechSynthesis.cancel();const segments=d.speech||[d.title,d.meaning];segments.forEach((txt,i)=>{const u=new SpeechSynthesisUtterance(txt);const hasBangla=/[\u0980-\u09FF]/.test(txt);u.lang=hasBangla?'bn-BD':'en-US';u.rate=.84;u.pitch=1.08;window.speechSynthesis.speak(u)})}
+function renderParent(){const done=progress.modes.beginner+progress.modes.regular+progress.modes.pro;$('parentStars').textContent=progress.stars;$('parentDone').textContent=done;for(const m of ['beginner','regular','pro']){$(m+'Bar').style.width=(progress.modes[m]/totals[m]*100)+'%'}$('beginnerText').textContent=`${progress.modes.beginner} / ${totals.beginner} অক্ষর`; $('regularText').textContent=`${progress.modes.regular} / ${totals.regular} শব্দ`; $('proText').textContent=`${progress.modes.pro} / ${totals.pro} বাক্য`; $('storageStatus').textContent=storageAvailable?'অগ্রগতি এই ডিভাইসের ব্রাউজারে সেভ হয়। ব্রাউজারের ডেটা মুছে ফেললে অগ্রগতিও মুছে যেতে পারে।':'এই ব্রাউজারে অগ্রগতি সেভ করা যাচ্ছে না। ব্রাউজারের স্টোরেজ অনুমতি/সেটিংস পরীক্ষা করুন।'}
+function resetProgress(){if(!window.confirm('সব স্টার ও শেখার অগ্রগতি মুছে ফেলবে?'))return;progress=emptyProgress();saveProgress();renderParent()}
+updateStars();
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body></html>
